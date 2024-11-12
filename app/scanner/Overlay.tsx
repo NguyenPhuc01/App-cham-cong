@@ -1,5 +1,12 @@
+import React, { useState, useEffect } from "react";
 import { Canvas, DiffRect, rect, rrect } from "@shopify/react-native-skia";
-import { Dimensions, Platform, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  Platform,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+} from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
@@ -17,7 +24,15 @@ const inner = rrect(
   50
 );
 
-export const Overlay = () => {
+export const Overlay = ({ loading }) => {
+  if (loading) {
+    return (
+      <View style={[StyleSheet.absoluteFill, styles.center]}>
+        <ActivityIndicator size="large" color="#000" />
+      </View>
+    );
+  }
+
   return (
     <Canvas
       style={
@@ -28,3 +43,11 @@ export const Overlay = () => {
     </Canvas>
   );
 };
+
+const styles = StyleSheet.create({
+  center: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+  },
+});
